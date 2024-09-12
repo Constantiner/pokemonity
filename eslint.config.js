@@ -50,6 +50,19 @@ module.exports = [
 			...config.rules
 		}
 	})),
+	{
+		rules: {
+			"no-console": ["error"],
+			"no-restricted-syntax": [
+				"error",
+				{
+					selector: "ExportDefaultDeclaration",
+					message: "Prefer named exports"
+				}
+			],
+			"no-else-return": ["error", { allowElseIf: false }]
+		}
+	},
 	eslintPluginPrettierRecommended,
 	eslintPluginUnicorn.configs["flat/recommended"],
 	{
@@ -85,7 +98,14 @@ module.exports = [
 	{
 		files: ["eslint.config.js", "apps/pokemonity/webpack.config.cjs"],
 		rules: {
-			"@typescript-eslint/no-require-imports": "off"
+			"@typescript-eslint/no-require-imports": "off",
+			"unicorn/prefer-module": "off"
+		}
+	},
+	{
+		files: ["**/jest.config.ts", "apps/pokemonity-e2e/src/support/*.ts"],
+		rules: {
+			"no-restricted-syntax": "off"
 		}
 	}
 ];
