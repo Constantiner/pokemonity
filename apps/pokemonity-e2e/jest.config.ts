@@ -1,10 +1,9 @@
-/* eslint-disable */
 export default {
 	displayName: "pokemonity-e2e",
 	preset: "../../jest.preset.js",
-	globalSetup: "<rootDir>/src/support/global-setup.ts",
-	globalTeardown: "<rootDir>/src/support/global-teardown.ts",
-	setupFiles: ["<rootDir>/src/support/test-setup.ts"],
+	globalSetup: "<rootDir>/src/support/globalSetup.ts",
+	globalTeardown: "<rootDir>/src/support/globalTeardown.ts",
+	setupFiles: ["<rootDir>/src/support/testSetup.ts"],
 	testEnvironment: "node",
 	transform: {
 		"^.+\\.[tj]s$": [
