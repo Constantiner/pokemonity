@@ -17,6 +17,16 @@
 		- [4. Create and Populate the **Pokeitems** Index](#4-create-and-populate-the-pokeitems-index)
 	- [Step 5: Confirm the Data](#step-5-confirm-the-data)
 	- [Notes](#notes)
+- [Environment Setup](#environment-setup)
+	- [Environment Variables](#environment-variables)
+	- [Setting Up Environment Files](#setting-up-environment-files)
+		- [Example `.env` File](#example-env-file)
+		- [Development Environment](#development-environment)
+			- [`apps/pokemonity/.env.development.local`](#appspokemonityenvdevelopmentlocal)
+		- [Production Environment](#production-environment)
+	- [Example `.env.example` Template](#example-envexample-template)
+			- [`apps/pokemonity/.env.example`](#appspokemonityenvexample)
+- [Running the Nest Server](#running-the-nest-server)
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
@@ -207,3 +217,96 @@ curl -X GET -u elastic:$ELASTIC_PASSWORD "localhost:9200/pokedex/_search?pretty"
 
 - Replace `your_password` with the actual password you set for the `elastic` user.
 - Make sure that the corresponding bulk data files (`pokedex_bulk.json`, `poketypes_bulk.json`, `pokemoves_bulk.json`, `pokeitems_bulk.json`) are in the correct directory.
+
+## Environment Setup
+
+To configure your project, you need to set up environment variables. These variables control how the application interacts with services like Elasticsearch and define the application's port for running the server.
+
+### Environment Variables
+
+The following environment variables must be configured for the application to work properly:
+
+| Variable Name              | Description                             | Example Value             |
+| -------------------------- | --------------------------------------- | ------------------------- |
+| `ELASTICSEARCH_HOST`        | Elasticsearch host                      | `localhost`               |
+| `ELASTICSEARCH_PORT`        | Elasticsearch port                      | `9200`                    |
+| `ELASTICSEARCH_USERNAME`    | Username for Elasticsearch              | `elastic`                 |
+| `ELASTICSEARCH_PASSWORD`    | Password for Elasticsearch              | `your_elastic_password`   |
+| `PORT`                      | Port on which the NestJS app will run   | `3000`                    |
+
+### Setting Up Environment Files
+
+You can use different `.env` files to manage your environment variables depending on the environment (e.g., development, production). The environment file should contain the above variables, and you can define them based on your environment.
+
+#### Example `.env` File
+
+For a typical setup, you would have a `.env` file that looks like this:
+
+```ini
+# Elasticsearch configuration
+ELASTICSEARCH_HOST=localhost
+ELASTICSEARCH_PORT=9200
+ELASTICSEARCH_USERNAME=elastic
+ELASTICSEARCH_PASSWORD=your_elastic_password
+
+# Application configuration
+PORT=3000
+```
+
+#### Development Environment
+
+For local development, create a file called `.env.development.local` in the `apps/pokemonity` directory. You can use the following structure as a template:
+
+##### `apps/pokemonity/.env.development.local`
+
+```ini
+# Elasticsearch configuration
+ELASTICSEARCH_HOST=localhost
+ELASTICSEARCH_PORT=9200
+ELASTICSEARCH_USERNAME=elastic
+ELASTICSEARCH_PASSWORD=your_elastic_password
+
+# Application configuration
+PORT=3000
+```
+
+This file will override the values in your `.env` file during development.
+
+#### Production Environment
+
+For production, create a file called `.env.production` and update the variables accordingly.
+
+### Example `.env.example` Template
+
+For convenience, you can create a `.env.example` file as a template that other developers can use to set up their own environment:
+
+##### `apps/pokemonity/.env.example`
+
+```ini
+# Elasticsearch configuration
+ELASTICSEARCH_HOST=localhost
+ELASTICSEARCH_PORT=9200
+ELASTICSEARCH_USERNAME=elastic
+ELASTICSEARCH_PASSWORD=your_elastic_password
+
+# Application configuration
+PORT=3000
+```
+
+This file serves as a reference for what variables are required but does not contain any sensitive information.
+
+## Running the Nest Server
+
+To start the NestJS server for the Pokémon app, run the following command:
+
+```bash
+npm run serve:pokemonity
+```
+
+Once the server is up and running, you can go to the following URL to check the Pokémon search API:
+
+```bash
+http://localhost:3000/api/pokemon/search?name=Pikachu
+```
+
+This will query Elasticsearch for the Pokémon with the name "Pikachu" and return its data.
