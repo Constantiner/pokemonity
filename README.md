@@ -1,4 +1,22 @@
-# Pokemonity
+# Pokemonity<!-- omit in toc -->
+
+- [Finish your CI setup](#finish-your-ci-setup)
+- [Run tasks](#run-tasks)
+- [Add new projects](#add-new-projects)
+- [Install Nx Console](#install-nx-console)
+- [Useful links](#useful-links)
+- [Pokemon Data](#pokemon-data)
+- [Setting up Elasticsearch for the Project](#setting-up-elasticsearch-for-the-project)
+	- [Step 1: Start Elasticsearch](#step-1-start-elasticsearch)
+	- [Step 2: Reset Elasticsearch Password](#step-2-reset-elasticsearch-password)
+	- [Step 3: Set Elasticsearch Password as an Environment Variable](#step-3-set-elasticsearch-password-as-an-environment-variable)
+	- [Step 4: Populate Elasticsearch with Pokémon Data](#step-4-populate-elasticsearch-with-pokémon-data)
+		- [1. Create and Populate the **Pokedex** Index](#1-create-and-populate-the-pokedex-index)
+		- [2. Create and Populate the **Poketypes** Index](#2-create-and-populate-the-poketypes-index)
+		- [3. Create and Populate the **Pokemoves** Index](#3-create-and-populate-the-pokemoves-index)
+		- [4. Create and Populate the **Pokeitems** Index](#4-create-and-populate-the-pokeitems-index)
+	- [Step 5: Confirm the Data](#step-5-confirm-the-data)
+	- [Notes](#notes)
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
@@ -80,3 +98,120 @@ And join the Nx community:
 - [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
 - [Our Youtube channel](https://www.youtube.com/@nxdevtools)
 - [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## Pokemon Data
+
+Use pokemon JSON data from [pokemon-data.json](https://github.com/Purukitto/pokemon-data.json).
+
+Here's an updated version of the `README` section that includes the instructions to set up and populate Elasticsearch for your project:
+
+---
+
+## Setting up Elasticsearch for the Project
+
+### Step 1: Start Elasticsearch
+
+To start an Elasticsearch container locally, use the `elastic-search:start` npm script. This command will start the Elasticsearch container using Docker Compose.
+
+```bash
+npm run elastic-search:start
+```
+
+This will start the Elasticsearch service on `localhost:9200`.
+
+### Step 2: Reset Elasticsearch Password
+
+You need to set a password for the `elastic` user in Elasticsearch. Run the following command to reset the password:
+
+```bash
+docker exec -it elasticsearch /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+```
+
+Save the generated password, as you will need it for further steps, including setting environment variables and for NestJS to connect to Elasticsearch.
+
+### Step 3: Set Elasticsearch Password as an Environment Variable
+
+Before populating Elasticsearch with data, export the `ELASTIC_PASSWORD` environment variable in your terminal using the password from the previous step.
+
+```bash
+export ELASTIC_PASSWORD="your_password"
+```
+
+### Step 4: Populate Elasticsearch with Pokémon Data
+
+To populate Elasticsearch with Pokémon data, you need to create the required indexes and use the `_bulk` API to import the data.
+
+#### 1. Create and Populate the **Pokedex** Index
+
+Create the `pokedex` index:
+
+```bash
+curl -X PUT -u elastic:$ELASTIC_PASSWORD "localhost:9200/pokedex"
+```
+
+Then, bulk import the data into the `pokedex` index:
+
+```bash
+curl -H "Content-Type: application/json" -X POST -u elastic:$ELASTIC_PASSWORD "localhost:9200/pokedex/_bulk?pretty" --data-binary "@pokedex_bulk.json"
+```
+
+#### 2. Create and Populate the **Poketypes** Index
+
+Create the `poketypes` index:
+
+```bash
+curl -X PUT -u elastic:$ELASTIC_PASSWORD "localhost:9200/poketypes"
+```
+
+Then, bulk import the data into the `poketypes` index:
+
+```bash
+curl -H "Content-Type: application/json" -X POST -u elastic:$ELASTIC_PASSWORD "localhost:9200/poketypes/_bulk?pretty" --data-binary "@poketypes_bulk.json"
+```
+
+#### 3. Create and Populate the **Pokemoves** Index
+
+Create the `pokemoves` index:
+
+```bash
+curl -X PUT -u elastic:$ELASTIC_PASSWORD "localhost:9200/pokemoves"
+```
+
+Then, bulk import the data into the `pokemoves` index:
+
+```bash
+curl -H "Content-Type: application/json" -X POST -u elastic:$ELASTIC_PASSWORD "localhost:9200/pokemoves/_bulk?pretty" --data-binary "@pokemoves_bulk.json"
+```
+
+#### 4. Create and Populate the **Pokeitems** Index
+
+Create the `pokeitems` index:
+
+```bash
+curl -X PUT -u elastic:$ELASTIC_PASSWORD "localhost:9200/pokeitems"
+```
+
+Then, bulk import the data into the `pokeitems` index:
+
+```bash
+curl -H "Content-Type: application/json" -X POST -u elastic:$ELASTIC_PASSWORD "localhost:9200/pokeitems/_bulk?pretty" --data-binary "@pokeitems_bulk.json"
+```
+
+### Step 5: Confirm the Data
+
+After populating the data, you can verify that the data was inserted correctly by querying Elasticsearch. For example, to search all data from the `pokedex` index:
+
+```bash
+curl -X GET -u elastic:$ELASTIC_PASSWORD "localhost:9200/pokedex/_search?pretty"
+```
+
+---
+
+### Notes
+
+- Replace `your_password` with the actual password you set for the `elastic` user.
+- Make sure that the corresponding bulk data files (`pokedex_bulk.json`, `poketypes_bulk.json`, `pokemoves_bulk.json`, `pokeitems_bulk.json`) are in the correct directory.
+
+---
+
+This section will guide developers through the entire process of setting up Elasticsearch for your project, configuring the password, and populating it with the Pokémon data.

@@ -5,6 +5,7 @@
 	"license": "MIT",
 	"scripts": {
 		"build:pokemonity": "npx nx build pokemonity --verbose",
+		"elastic-search:start": "docker compose -f ./docker-compose.yml up -d",
 		"format": "npx prettier --write '**/*.{js,cjs,mjs,ts,jsx,tsx,css,scss,json,htm,html,yml,lintstagedrc,stylelintrc}'",
 		"graph:pokemonity": "npx nx show project pokemonity --verbose",
 		"graph:pokemonity-e2e": "npx nx show project pokemonity-e2e --verbose",
