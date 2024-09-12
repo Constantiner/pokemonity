@@ -103,10 +103,6 @@ And join the Nx community:
 
 Use pokemon JSON data from [pokemon-data.json](https://github.com/Purukitto/pokemon-data.json).
 
-Here's an updated version of the `README` section that includes the instructions to set up and populate Elasticsearch for your project:
-
----
-
 ## Setting up Elasticsearch for the Project
 
 ### Step 1: Start Elasticsearch
@@ -211,7 +207,3 @@ curl -X GET -u elastic:$ELASTIC_PASSWORD "localhost:9200/pokedex/_search?pretty"
 
 - Replace `your_password` with the actual password you set for the `elastic` user.
 - Make sure that the corresponding bulk data files (`pokedex_bulk.json`, `poketypes_bulk.json`, `pokemoves_bulk.json`, `pokeitems_bulk.json`) are in the correct directory.
-
----
-
-This section will guide developers through the entire process of setting up Elasticsearch for your project, configuring the password, and populating it with the Pokémon data.
