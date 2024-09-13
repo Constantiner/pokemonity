@@ -33,4 +33,18 @@ export class PokedexService {
 			.filter(isNonNullable)
 			.map(type => type.english);
 	}
+
+	async getPokemonByType(type: string) {
+		const result = await this.elasticsearchClient.search<PokedexEntry>({
+			index: "pokedex",
+			body: {
+				query: {
+					term: {
+						"type.keyword": type // Use term query with .keyword to search exact values
+					}
+				}
+			}
+		});
+		return result.hits.hits.map(hit => hit._source).filter(isNonNullable);
+	}
 }

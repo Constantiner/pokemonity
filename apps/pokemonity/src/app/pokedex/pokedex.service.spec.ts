@@ -4,8 +4,9 @@ import { PokedexService } from "./pokedex.service";
 describe("PokedexService", () => {
 	let service: PokedexService;
 
+	// Mock the Elasticsearch client
 	const mockElasticsearchClient = {
-		search: jest.fn().mockResolvedValue({ hits: { hits: [] } }) // Mock search method, you can customize the return value
+		search: jest.fn().mockResolvedValue({ hits: { hits: [] } }) // Mock search method
 	};
 
 	beforeEach(async () => {
@@ -26,7 +27,7 @@ describe("PokedexService", () => {
 		expect(service).toBeDefined();
 	});
 
-	it("should call the search method on Elasticsearch client when searching for Pokemon", async () => {
+	it("should call the search method on Elasticsearch client for searchPokemon", async () => {
 		const result = await service.searchPokemon("Pikachu");
 		expect(mockElasticsearchClient.search).toHaveBeenCalledWith({
 			index: "pokedex",
@@ -39,31 +40,33 @@ describe("PokedexService", () => {
 		expect(result).toEqual([]); // As we mocked an empty result set
 	});
 
-	it("should call the search method on Elasticsearch client when getting types", async () => {
-		// Mock a response from Elasticsearch for the types query
-		const mockResponse = {
+	it("should call the search method on Elasticsearch client for getPokemonByType", async () => {
+		// Mock response for the type query
+		mockElasticsearchClient.search.mockResolvedValueOnce({
 			hits: {
 				hits: [
-					{ _source: { english: "Fire" } },
-					{ _source: { english: "Water" } },
-					{ _source: { english: "Grass" } }
+					{ _source: { id: 1, name: { english: "Bulbasaur" }, type: ["Grass", "Poison"] } },
+					{ _source: { id: 2, name: { english: "Ivysaur" }, type: ["Grass", "Poison"] } }
 				]
 			}
-		};
+		});
 
-		// Update the mock to return the mock response for the getTypes method
-		mockElasticsearchClient.search.mockResolvedValueOnce(mockResponse);
-
-		const result = await service.getTypes();
+		const result = await service.getPokemonByType("Poison");
 		expect(mockElasticsearchClient.search).toHaveBeenCalledWith({
-			index: "poketypes",
+			index: "pokedex",
 			body: {
 				query: {
-					match_all: {}
+					term: {
+						"type.keyword": "Poison"
+					}
 				}
 			}
 		});
 
-		expect(result).toEqual(["Fire", "Water", "Grass"]);
+		// Check the result is returned as expected
+		expect(result).toEqual([
+			{ id: 1, name: { english: "Bulbasaur" }, type: ["Grass", "Poison"] },
+			{ id: 2, name: { english: "Ivysaur" }, type: ["Grass", "Poison"] }
+		]);
 	});
 });
