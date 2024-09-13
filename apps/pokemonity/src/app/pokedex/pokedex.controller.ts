@@ -9,4 +9,9 @@ export class PokedexController {
 	async searchPokemon(@Query("name") name: string) {
 		return await this.pokedexService.searchPokemon(name);
 	}
+
+	@Get("type")
+	async getTypes() {
+		return await this.pokedexService.getTypes();
+	}
 }

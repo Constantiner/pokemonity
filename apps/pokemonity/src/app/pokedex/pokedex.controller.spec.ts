@@ -7,7 +7,8 @@ describe("PokedexController", () => {
 	let mockPokedexService: PokedexService;
 
 	const mockPokedexServiceProvider = {
-		searchPokemon: jest.fn().mockResolvedValue([]) // Mock searchPokemon method
+		searchPokemon: jest.fn().mockResolvedValue([]), // Mock searchPokemon method
+		getTypes: jest.fn().mockResolvedValue(["Fire", "Water", "Grass"]) // Mock getTypes method
 	};
 
 	beforeEach(async () => {
@@ -33,5 +34,11 @@ describe("PokedexController", () => {
 		const result = await controller.searchPokemon("Pikachu");
 		expect(mockPokedexService.searchPokemon).toHaveBeenCalledWith("Pikachu");
 		expect(result).toEqual([]); // Since the mock resolves an empty array
+	});
+
+	it("should call getTypes in the service", async () => {
+		const result = await controller.getTypes();
+		expect(mockPokedexService.getTypes).toHaveBeenCalled(); // Verify the service method is called
+		expect(result).toEqual(["Fire", "Water", "Grass"]); // Mocked return value
 	});
 });
