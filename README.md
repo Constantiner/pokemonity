@@ -31,6 +31,10 @@
 	- [Adding a Controller to the Nest Application](#adding-a-controller-to-the-nest-application)
 	- [Adding a Service to the Nest Application](#adding-a-service-to-the-nest-application)
 	- [Adding a Module to the Nest Application](#adding-a-module-to-the-nest-application)
+- [API Documentation with Swagger](#api-documentation-with-swagger)
+	- [Accessing Swagger UI](#accessing-swagger-ui)
+	- [How to Use](#how-to-use)
+	- [Instructions to Run the Application](#instructions-to-run-the-application)
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
@@ -352,3 +356,29 @@ This will create a new module for the `pokedex` feature in the **`pokemonity`** 
 For more information on using the Nest generators in Nx, visit the official documentation:
 
 [More info on Nx Nest generators](https://nx.dev/nx-api/nest)
+
+## API Documentation with Swagger
+
+This project includes interactive API documentation powered by **Swagger**. Swagger allows you to explore and test the available API endpoints directly from your browser.
+
+### Accessing Swagger UI
+
+Once the server is running, you can access the Swagger UI at:
+
+```bash
+http://localhost:3000/api/swagger
+```
+
+### How to Use
+
+- **Explore Endpoints**: The Swagger UI provides a list of all available API endpoints, organized by tags (such as `pokedex`).
+- **Test Endpoints**: You can use the Swagger UI to send test requests directly to the server and see live responses.
+- **API Documentation**: Each endpoint includes detailed information, such as the request parameters, response structure, and status codes.
+
+Swagger is set up to reflect the current API routes, including the global `api` prefix.
+
+---
+
+### Instructions to Run the Application
+
+Make sure you have followed the instructions to set up the NestJS application and have the server running. Once the server is up, visit the Swagger documentation at the above link.
