@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { getEnvironmentFiles } from "../util/environment";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { ElasticsearchModule } from "./elasticsearch/elasticsearch.module";
+import { PokedexModule } from "./pokedex/pokedex.module";
 
 @Module({
 	imports: [
@@ -11,7 +11,7 @@ import { ElasticsearchModule } from "./elasticsearch/elasticsearch.module";
 			isGlobal: true, // This makes the configuration available throughout the app
 			envFilePath: getEnvironmentFiles("../../.env")
 		}),
-		ElasticsearchModule
+		PokedexModule
 	],
 	controllers: [AppController],
 	providers: [AppService]

@@ -310,7 +310,7 @@ npm run serve:pokemonity
 Once the server is up and running, you can go to the following URL to check the Pokémon search API:
 
 ```bash
-http://localhost:3000/api/pokemon/search?name=Pikachu
+http://localhost:3000/api/pokedex/search?name=Pikachu
 ```
 
 This will query Elasticsearch for the Pokémon with the name "Pikachu" and return its data.
@@ -324,30 +324,30 @@ In an Nx monorepository, we use `@nx/nest` generators to scaffold new modules, s
 To generate a new controller in the Nest application, use the following command:
 
 ```bash
-npx nx g @nx/nest:controller elasticsearch --project=pokemonity
+npx nx g @nx/nest:controller pokedex --project=pokemonity
 ```
 
-This will generate a new controller under the `elasticsearch` feature in the **`pokemonity`** Nest application.
+This will generate a new controller under the `pokedex` feature in the **`pokemonity`** Nest application.
 
 ### Adding a Service to the Nest Application
 
 To generate a new service in the Nest application, use this command:
 
 ```bash
-npx nx g @nx/nest:service elasticsearch --project=pokemonity
+npx nx g @nx/nest:service pokedex --project=pokemonity
 ```
 
-This will generate a new service for the `elasticsearch` feature in the **`pokemonity`** Nest application.
+This will generate a new service for the `pokedex` feature in the **`pokemonity`** Nest application.
 
 ### Adding a Module to the Nest Application
 
 To generate a new module in the Nest application, use the following command:
 
 ```bash
-npx nx g @nx/nest:module elasticsearch --project=pokemonity
+npx nx g @nx/nest:module pokedex --project=pokemonity
 ```
 
-This will create a new module for the `elasticsearch` feature in the **`pokemonity`** Nest application.
+This will create a new module for the `pokedex` feature in the **`pokemonity`** Nest application.
 
 For more information on using the Nest generators in Nx, visit the official documentation:
 

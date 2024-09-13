@@ -1,8 +1,8 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { ElasticsearchService } from "./elasticsearch.service";
+import { PokedexService } from "./pokedex.service";
 
-describe("ElasticsearchService", () => {
-	let service: ElasticsearchService;
+describe("PokedexService", () => {
+	let service: PokedexService;
 
 	const mockElasticsearchClient = {
 		search: jest.fn().mockResolvedValue({ hits: { hits: [] } }) // Mock search method, you can customize the return value
@@ -11,7 +11,7 @@ describe("ElasticsearchService", () => {
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
-				ElasticsearchService,
+				PokedexService,
 				{
 					provide: "ELASTICSEARCH_CLIENT",
 					useValue: mockElasticsearchClient // Inject the mock client
@@ -19,7 +19,7 @@ describe("ElasticsearchService", () => {
 			]
 		}).compile();
 
-		service = module.get<ElasticsearchService>(ElasticsearchService);
+		service = module.get<PokedexService>(PokedexService);
 	});
 
 	it("should be defined", () => {

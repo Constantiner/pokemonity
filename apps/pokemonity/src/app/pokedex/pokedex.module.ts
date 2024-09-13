@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { ElasticsearchService } from "./elasticsearch.service";
-import { ElasticsearchController } from "./elasticsearch.controller";
+import { PokedexService } from "./pokedex.service";
+import { PokedexController } from "./pokedex.controller";
 
 @Module({
 	imports: [ConfigModule],
@@ -20,8 +20,8 @@ import { ElasticsearchController } from "./elasticsearch.controller";
 			},
 			inject: [ConfigService]
 		},
-		ElasticsearchService
+		PokedexService
 	],
-	controllers: [ElasticsearchController]
+	controllers: [PokedexController]
 })
-export class ElasticsearchModule {}
+export class PokedexModule {}

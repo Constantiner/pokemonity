@@ -2,7 +2,7 @@ import { Client } from "@elastic/elasticsearch";
 import { Inject, Injectable } from "@nestjs/common";
 
 @Injectable()
-export class ElasticsearchService {
+export class PokedexService {
 	constructor(@Inject("ELASTICSEARCH_CLIENT") private readonly elasticsearchClient: Client) {}
 
 	async searchPokemon(name: string) {
